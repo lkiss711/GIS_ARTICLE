@@ -3,7 +3,7 @@ require("tidyr")
 require("dplyr")
 require("stringr")
 require("MTS")
-
+require("forecast")
 
 id <- "nrg_chdd_a"
 data <- get_eurostat(id,time_format = "date",select_time = )
@@ -16,6 +16,7 @@ data_all$time <- as.Date(data_all$time,format= "%Y-%m-%d")
 start_date <- as.Date("1990-01-01",format= "%Y-%m-%d")
 end_date <- as.Date("2017-01-01",format= "%Y-%m-%d")
 
+data_all <- data_all[data_all$time >= start_date,]
 data_all <- data_all[data_all$time <= end_date,]
 
 data_all <- filter(data_all, str_detect(geo, paste(validcountries, collapse="|")))
@@ -32,9 +33,13 @@ data_energy <- filter(data_energy, str_detect(geo, paste(validcountries, collaps
 data_energy_wide_spread <- spread(data_energy,time,values)
 ts_data_energy <- spread(data_energy,geo,values)
 
+ts_hdd <- msts(ts_data[,3:5],seasonal.periods = 12, start = 1990)
+ts_energy <- msts(ts_data_energy[,2:4],seasonal.periods = 12, start = 1990)
 
+x <- decompose(ts_hdd)
+y <- decompose(ts_energy)
+plot(x$trend)
+plot(y$trend)
 
-ts_hdd <- ts(ts_data[,c(-1,-2)],start=c(1990), end=c(2017), frequency=1)
-ts_energy <- ts(ts_data_energy[,c(-1,-2)],start=c(1990), end=c(2017), frequency=1)
-
-cor(ts_data[,3],ts_data_energy[,2])
+cor(ts_hdd,ts_energy)
+plot(ts_hdd[,1])
