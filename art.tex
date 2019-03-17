@@ -3,6 +3,7 @@
 \usepackage{textcomp}
 \usepackage{version}
 \usepackage{amsmath}
+\usepackage{graphicx}
 \usepackage[textwidth=8em,textsize=small]{todonotes}
 
 \title{Analysis and visualization of the Heating Degree Days in the Benelux states}
@@ -271,5 +272,42 @@ The term $\epsilon_{t}$ in the equation represents multivariate vector white noi
 \end{enumerate}
 
 From the equations 1 and 2 it is clear that each variable use it's previous values to make a predictions. Unlike AR, VAR is able to understand and use the relationship between several variables.
+
+\section*{Time series data of Heating Degree Days in Benelux}
+The data collection started in 1975 and it is available in yearly and monthly frequency.\newline
+
+\includegraphics[width=\textwidth]{images/raw_data.jpeg}
+
+There is an important technique for all types of time series data called decomposition. It seeks the construct of the data from an observations. Usually time series decomposed into:
+\begin{itemize}
+    \item T$_t$, the trend component at time t which is refers to a long term progression.
+    \item C$_t$ the cyclical component at time t which reflects repeated but non-periodic fluctuations
+    \item S$_t$ the seasonal component at time t, reflecting seasonality (seasonal variation).
+    \item I$_t$the irregular component (or "noise") at time t, which describes random, irregular influences. 
+\end{itemize}
+For the forecasting I use the auto.arima function for the all column in the dataset, and after I select the common order for the 
+After the decomposition we can see the trend in our data set.\newline    
+\includegraphics[width=\textwidth]{images/trend_data.jpeg}
+
+\section*{Forecasting with VARMA model}
+
+Vector autoregressive moving-average (VARMA) processes are suitable models for producing linear forecasts of sets of time series variables. A vector sequence y(t) of n elements is said to follow an n-variate ARMA process of orders p and q if it satisfies the equation: 
+\[
+A_{0}y(t) + A_{1}y(t-1) + .. + A_{p}y(t-p) =
+    M_{0}\epsilon(t) + M_{1}\epsilon(t-1)+ .. + M_{p}\epsilon(t-p)
+\]
+where $A_{0}$, $A_{1}$, ... ,$A_{p}$, $M_{0}\epsilon$(t), $M_{1}\epsilon$(t-1), $M_{q}\epsilon$(t-q) are matrices of order n × n and $\epsilon$(t) is a disturbance vector of n elements determined by serially-uncorrelated white noise processes that may have some contemporaneous correlation.
+\includegraphics[width=\textwidth]{images/pred_data.jpeg}
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
