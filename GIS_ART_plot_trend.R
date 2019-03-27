@@ -1,5 +1,8 @@
 library("plotly")
 
+Sys.setenv("plotly_username"="lkiss711")
+Sys.setenv("plotly_api_key"="f60zhortDCQyEM80zPNA")
+
 
 trend_df <- cbind(ts_data[7:522,2],decomp_ts_hdd$trend[7:522,])
 colnames(trend_df) = c('time','BE','LU','NL')
@@ -22,4 +25,11 @@ p_trend <-
          )))))
 p_trend
 
+# api_create(p_trend, filename = "benelux_hdd_trend")
+# https://plot.ly/~lkiss711/31/
+
+p_gas <- plot_ly(data = ts_data_energy,x = ~time) 
+p_gas <- add_lines(p_gas, y = ~BE,name = 'Belgium',line = list(width = 1, color = "#00587b"),visible = T)
+p_gas <- add_lines(p_gas, y = ~BE_en,name = 'Belgium Energy',line = list(width = 1, color = "##FE2E64"),visible = T) 
+p_gas
 

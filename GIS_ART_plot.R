@@ -1,5 +1,7 @@
 library("plotly")
 
+Sys.setenv("plotly_username"="lkiss711")
+Sys.setenv("plotly_api_key"="f60zhortDCQyEM80zPNA")
 
 
 p <- plot_ly(data = ts_data,x = ~time) 
@@ -18,3 +20,6 @@ p <-
            list(method = "restyle",args = list("visible", list(F,F,T)),label = 'Netherland')
          )))))
 p
+
+# api_create(p, filename = "benelux_hdd_data")
+# https://plot.ly/~lkiss711/33/#/ 
